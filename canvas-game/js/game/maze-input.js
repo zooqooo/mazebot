@@ -136,6 +136,33 @@ function MazeInput(coordinates, overlay) {
     var direction = directions[key];
     if (direction) onDirection(direction);
     if (key === '=' || key === '+') onZoom();
+    if (key === ' ') autosolve();
+  }
+
+  function autosolve() {
+    var i = 0;
+    while(i < 14) {
+      onDirection('N');
+      if(isValidPosition)
+      i++;
+    }
+  }
+
+  function isValidPosition(p) {
+    var map = currentMaze.map;
+
+    // out of bounds
+    if (
+      p[0] < 0 ||
+      p[1] < 0 ||
+      p[0] >= map[0].length ||
+      p[1] >= map.length
+    ) return false;
+
+    // wall
+    if (map[p[1]][p[0]] === 'X') return false;
+
+    return true;
   }
 
   // ohai what's this?
